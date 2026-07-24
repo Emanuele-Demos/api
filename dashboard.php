@@ -1,7 +1,7 @@
 <?php
 
 require_once "conn.php";
-
+session_start();
 // Controllo della sessione
 if (!isset($_SESSION["user_id"])) {
 

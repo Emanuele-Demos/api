@@ -39,7 +39,7 @@ if ($result->num_rows == 1) {
 
     // Verifica la password
     if (password_verify($password, $utente["password"])) {
-
+        session_start();
         // Salva i dati dell'utente nella sessione
         $_SESSION["user_id"] = $utente["id_utente"];
         $_SESSION["nome"] = $utente["nome"];

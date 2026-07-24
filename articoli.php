@@ -1,7 +1,7 @@
 <?php
 
 require_once "conn.php";
-
+session_start();
 // Controllo della sessione
 if (!isset($_SESSION["user_id"])) {
 
@@ -101,7 +101,21 @@ $result = $conn->query($sql);
                         required></textarea>
 
                 </div>
+                <div class="mb-3">
 
+<label class="form-label">
+
+    link
+
+</label>
+
+<input
+    type="text"
+    name="link"
+    class="form-control"
+    required>
+
+</div>
                 <button
                     type="submit"
                     class="btn btn-primary">

@@ -1,20 +1,17 @@
 <?php
 
 require_once "conn.php";
+session_start();
 
 // Controllo della sessione
 if (!isset($_SESSION["user_id"])) {
-
     header("Location: login.php");
     exit();
-
 }
 
 // Controllo dell'ID
 if (!isset($_GET["id"]) || empty($_GET["id"])) {
-
     die("Articolo non trovato.");
-
 }
 
 $id = intval($_GET["id"]);
@@ -27,7 +24,7 @@ include "header.php";
 $sql = "SELECT
             a.id_articolo,
             a.titolo,
-            a.contenuto,
+            a.corpo,
             ar.nome AS argomento
         FROM articoli a
         INNER JOIN argomenti ar
@@ -52,7 +49,6 @@ if ($result->num_rows == 0) {
 
     include "footer.php";
     exit();
-
 }
 
 $articolo = $result->fetch_assoc();
@@ -66,9 +62,7 @@ $articolo = $result->fetch_assoc();
         <div class="card-header bg-primary text-white">
 
             <h2>
-
                 <?php echo htmlspecialchars($articolo["titolo"]); ?>
-
             </h2>
 
         </div>
@@ -76,31 +70,22 @@ $articolo = $result->fetch_assoc();
         <div class="card-body">
 
             <p>
-
                 <strong>Argomento:</strong>
-
                 <?php echo htmlspecialchars($articolo["argomento"]); ?>
-
             </p>
 
             <hr>
 
             <p style="text-align: justify; white-space: pre-line;">
-
-                <?php echo htmlspecialchars($articolo["contenuto"]); ?>
-
+                <?php echo htmlspecialchars($articolo["corpo"]); ?>
             </p>
 
         </div>
 
         <div class="card-footer">
 
-            <a
-                href="articoli.php"
-                class="btn btn-secondary">
-
+            <a href="articoli.php" class="btn btn-secondary">
                 Torna agli articoli
-
             </a>
 
         </div>
@@ -112,7 +97,6 @@ $articolo = $result->fetch_assoc();
 <?php
 
 $stmt->close();
-
 $conn->close();
 
 include "footer.php";
