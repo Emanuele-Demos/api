@@ -23,13 +23,15 @@ $id_argomento = $_POST["id_argomento"];
 $titolo = trim($_POST["titolo"]);
 $contenuto = trim($_POST["contenuto"]);
 $link = trim($_POST["link"]);
+$private = trim($POST["private"]);
 
 // Controllo dei campi obbligatori
 if (
     empty($id_argomento) ||
     empty($titolo) ||
     empty($contenuto) ||
-    empty($link) 
+    empty($link) ||
+    !is_numeric($private) ||
 ) {
 
     die("Compila tutti i campi.");
@@ -38,17 +40,18 @@ if (
 
 // Inserimento dell'articolo
 $sql = "INSERT INTO articoli
-        (titolo, corpo, id_argomento, link)
-        VALUES (?, ?, ?, ?)";
+        (titolo, corpo, id_argomento, link, private)
+        VALUES (?, ?, ?, ?, ?)";
 
 $stmt = $conn->prepare($sql);
 
 $stmt->bind_param(
-    "ssis",
+    "ssisi",
     $titolo,
     $contenuto,
     $id_argomento,
-    $link
+    $link,
+    $private
 );
 
 if ($stmt->execute()) {

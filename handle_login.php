@@ -32,6 +32,9 @@ $stmt->execute();
 
 $result = $stmt->get_result();
 
+print_r($result);
+exit();
+
 // Controlla se l'utente esiste
 if ($result->num_rows == 1) {
 

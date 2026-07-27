@@ -116,6 +116,15 @@ $result = $conn->query($sql);
     required>
 
 </div>
+
+<div class="mb-3>
+    <label class="form-label">
+        Visibilità
+    </label>
+    <select name="private" class="form-select" required>
+        <option vlaue="0">Pubblica</option>
+        <option value="1">Privata</option>
+    </select>
                 <button
                     type="submit"
                     class="btn btn-primary">
@@ -132,7 +141,7 @@ $result = $conn->query($sql);
 
     <hr class="my-5">
 
-    <h2>Articoli pubblicati</h2>
+    <h2>Articoli PUBBLICI</h2>
 
     <?php
 
