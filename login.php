@@ -1,13 +1,12 @@
 <?php
-
 require_once "conn.php";
+require_once "models/user.php";
+session_start();
 
 // Se l'utente è già autenticato lo reindirizza alla dashboard
 if (isset($_SESSION["user_id"])) {
-
     header("Location: dashboard.php");
     exit();
-
 }
 
 $title = "Login";
@@ -23,13 +22,16 @@ include "header.php";
         <div class="col-md-6">
 
             <div class="card shadow">
-
+            <?php
+            if (isset($_SESSION["register_success"])) {
+                echo '<div class="alert alert-success">' . $_SESSION["register_success"] . '</div>';
+                unset($_SESSION["register_success"]);
+            }
+            ?>
                 <div class="card-header bg-primary text-white">
 
                     <h2 class="text-center">
-
                         Login
-
                     </h2>
 
                 </div>

@@ -1,72 +1,34 @@
-<?php
-
-require_once "conn.php";
-
-// Controlla che il form sia stato inviato tramite POST
-if ($_SERVER["REQUEST_METHOD"] != "POST") {
-
-    header("Location: login.php");
-    exit();
-
-}
-
-// Recupera i dati
-$email = trim($_POST["email"]);
-$password = $_POST["password"];
-
-// Controllo campi vuoti
-if (empty($email) || empty($password)) {
-
-    die("Compila tutti i campi.");
-
-}
-
-// Cerca l'utente tramite email
-$sql = "SELECT * FROM utenti WHERE email = ?";
-
-$stmt = $conn->prepare($sql);
-
-$stmt->bind_param("s", $email);
-
-$stmt->execute();
-
-$result = $stmt->get_result();
-
-print_r($result);
-exit();
-
-// Controlla se l'utente esiste
-if ($result->num_rows == 1) {
-
-    $utente = $result->fetch_assoc();
-
-    // Verifica la password
-    if (password_verify($password, $utente["password"])) {
-        session_start();
-        // Salva i dati dell'utente nella sessione
-        $_SESSION["user_id"] = $utente["id_utente"];
-        $_SESSION["nome"] = $utente["nome"];
-        $_SESSION["cognome"] = $utente["cognome"];
-        $_SESSION["email"] = $utente["email"];
-
-        // Reindirizza alla dashboard
-        header("Location: dashboard.php");
-        exit();
-
-    } else {
-
-        die("Password non corretta.");
-
-    }
-
-} else {
-
-    die("Utente non trovato.");
-
-}
-
-$stmt->close();
-
-$conn->close();
-
-?>
+<?php
+
+require_once "conn.php";
+require_once "models/user.php";
+
+// Controlla che il form sia stato inviato tramite POST
+if ($_SERVER["REQUEST_METHOD"] != "POST") {
+    header("Location: login.php");
+    exit();
+}
+
+// Recupera i dati
+$email = trim($_POST["email"]);
+$password = $_POST["password"];
+
+// Controllo campi vuoti
+if (empty($email) || empty($password)) {
+    die("Compila tutti i campi.");
+}
+
+$result = User::authenticate($email, $password);
+
+if ($result) {
+    session_start();
+    $_SESSION["user_id"] = $result["id_utente"];
+    $_SESSION["nome"] = $result["nome"];
+    $_SESSION["cognome"] = $result["cognome"];
+    $_SESSION["email"] = $result["email"];
+
+    header("Location: dashboard.php");
+    exit();
+} else {
+    die("Credenziali non valide.");
+}

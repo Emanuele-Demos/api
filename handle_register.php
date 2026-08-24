@@ -1,6 +1,7 @@
 <?php
 
 require_once "conn.php";
+require_once "models/user.php";
 
 // Controlla che il form sia stato inviato tramite POST
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
@@ -35,13 +36,9 @@ if ($password !== $conferma_password) {
 
 // Controllo se l'email esiste già
 $sql = "SELECT id_utente FROM utenti WHERE email = ?";
-
 $stmt = $conn->prepare($sql);
-
 $stmt->bind_param("s", $email);
-
 $stmt->execute();
-
 $result = $stmt->get_result();
 
 if ($result->num_rows > 0) {
@@ -54,31 +51,19 @@ $stmt->close();
 $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
 // Inserimento utente
-$sql = "INSERT INTO utenti
-(nome, cognome, email, numero_di_telefono, password)
-VALUES (?, ?, ?, ?, ?)";
+$user = new User($nome, $cognome, $email, $telefono, $password_hash);
+$result = $user->register();
 
-$stmt = $conn->prepare($sql);
-
-$stmt->bind_param(
-    "sssss",
-    $nome,
-    $cognome,
-    $email,
-    $telefono,
-    $password_hash
-);
-
-if ($stmt->execute()) {
-
-    $stmt->close();
-
+if ($result) {
+    session_start();
+    //messaggio di successo
+    $_SESSION["register_success"] = "Registrazione effettuata con successo.";
     header("Location: login.php");
-
     exit();
-
 } else {
-
-    die("Errore durante la registrazione.");
-
+    session_start();
+    //messaggio di errore
+    $_SESSION["register_error"] = "Errore durante la registrazione.";
+    header("Location: register.php");
+    exit();
 }
