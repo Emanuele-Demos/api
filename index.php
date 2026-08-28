@@ -1,5 +1,6 @@
 <?php
-include 'header.php';
+require_once $_SERVER['DOCUMENT_ROOT'] . '/conn.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/views/header.php';
 ?>
 
 <main>
@@ -13,7 +14,7 @@ include 'header.php';
         <h2>Articoli PUBBLICI</h2>
 
     <?php
-
+    // da modificare spostandola nei models
     $sql = "SELECT a.id_articolo,
             a.titolo,
             a.private,
@@ -106,4 +107,4 @@ include 'header.php';
 </div>
 
 <?php
-include 'footer.php';
+include BASE_PATH . '/views/footer.php';

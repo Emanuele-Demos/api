@@ -1,18 +1,19 @@
 <?php
 
-require_once "conn.php";
+require_once __DIR__ . '/../conn.php';
 session_start();
-// Controllo della sessione
-if (!isset($_SESSION["user_id"])) {
 
-    header("Location: login.php");
+// Controllo della sessione
+
+if (!isset($_SESSION["user_id"])) {
+    header("Location: /views/login.php");
     exit();
 
 }
 
 $title = "Gestione Argomenti";
 
-include "header.php";
+include BASE_PATH . '/views/header.php';
 
 // Recupera tutti gli argomenti
 $sql = "SELECT * FROM argomenti ORDER BY id_argomento DESC";
@@ -132,6 +133,6 @@ $result = $conn->query($sql);
 
 <?php
 
-include "footer.php";
+include BASE_PATH . '/views/footer.php';
 
 ?>

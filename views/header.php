@@ -1,7 +1,3 @@
-<?php
-require_once "conn.php";
-?>
-
 <!DOCTYPE html>
 <html lang="it">
 
@@ -33,11 +29,11 @@ require_once "conn.php";
 
     <ul class="nav">
         <li class="nav-item"><a href="index.php" class="nav-link">Home</a></li>
-        <li class="nav-item"><a href="argomenti.php" class="nav-link">Argomenti</a></li>
-        <li class="nav-item"><a href="articoli.php" class="nav-link">Articoli</a></li>
-        <li class="nav-item"><a href="esercizi.php" class="nav-link">Esercizi</a></li>
-        <li class="nav-item"><a href="login.php" class="btn btn-primary">Login</a></li>
-        <li class="nav-item"><a href="register.php" class="btn btn-primary">Registrati</a></li>
-</ul>
+        <li class="nav-item"><a href="/views/argomenti.php" class="nav-link">Argomenti</a></li>
+        <li class="nav-item"><a href="/views/articoli.php" class="nav-link">Articoli</a></li>
+        <li class="nav-item"><a href="/views/esercizi.php" class="nav-link">Esercizi</a></li>
+        <li class="nav-item"><a href="/views/login.php" class="btn btn-primary">Login</a></li>
+        <li class="nav-item"><a href="/views/register.php" class="btn btn-primary">Registrati</a></li>
+    </ul>
 
 </header>

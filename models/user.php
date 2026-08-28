@@ -1,9 +1,5 @@
 <?php
-
-
-
 require_once __DIR__ . '/../conn.php';
-
 
 
 class User {
@@ -21,7 +17,6 @@ class User {
         $this->email = $email;
         $this->telefono = $telefono;
         $this->password = $password;
-
     }
 
     public function register() {
@@ -34,10 +29,7 @@ class User {
 
     }
 
-
-
     public static function authenticate($email, $password) {
-
         global $conn;
         $sql = "SELECT * FROM utenti WHERE email = ?";
         $stmt = $conn->prepare($sql);
@@ -47,10 +39,26 @@ class User {
         if ($user && password_verify($password, $user["password"])) {
             return $user;
         }
-
         return false;
+    }
+
+    public function checkRegister() {
+        global $conn;
+        $sql = "SELECT id_utente FROM utenti WHERE email = ?";
+        $stmt = $conn->prepare($sql);
+        $stmt->bind_param("s", $this->email);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        if ($result->num_rows > 0) {
+            //email già registrata
+           return true;
+        }else{
+            //email libera
+            return false;
+        }
 
     }
+
 
 }
 

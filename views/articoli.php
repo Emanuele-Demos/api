@@ -1,6 +1,6 @@
 <?php
 
-require_once "conn.php";
+require_once __DIR__ . '/../conn.php";
 session_start();
 // Controllo della sessione
 if (!isset($_SESSION["user_id"])) {
@@ -12,7 +12,7 @@ if (!isset($_SESSION["user_id"])) {
 
 $title = "Nuovo Articolo";
 
-include "header.php";
+include BASE_PATH . '/views/header.php';
 
 // Recupera gli argomenti
 $sql = "SELECT * FROM argomenti ORDER BY nome ASC";
@@ -235,6 +235,6 @@ $result = $conn->query($sql);
 
 <?php
 
-include "footer.php";
+include BASE_PATH . '/views/footer.php';
 
 ?>

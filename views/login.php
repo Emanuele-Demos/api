@@ -1,6 +1,6 @@
 <?php
-require_once "conn.php";
-require_once "models/user.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/conn.php";
+require_once $_SERVER['DOCUMENT_ROOT'] . "/models/user.php";
 session_start();
 
 // Se l'utente è già autenticato lo reindirizza alla dashboard
@@ -60,7 +60,7 @@ include "header.php";
 
                             <label class="form-label">
 
-                                Password
+                                Chiave di accesso
 
                             </label>
 

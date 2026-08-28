@@ -1,6 +1,7 @@
 <?php
 $title = "Registrazione";
 include "header.php";
+session_start();
 ?>
 
 <div class="container mt-5">
@@ -10,14 +11,25 @@ include "header.php";
         <div class="col-md-6">
 
             <div class="card shadow">
+            <?php
+            if (isset($_SESSION["error_registrazione"])) {
+                echo '<div class="alert alert-danger">' . $_SESSION["campi_obbligatori"] . '</div>';
+                unset($_SESSION["error_registrazione"]);
+            }
 
+            if(isset($_SESSION["registrazione_corretta"])){
+                echo '<div class="alert alert-success">' . $_SESSION["registrazione_corretta"] . '</div>';
+                unset($_SESSION["registrazione_corretta"]);
+            }
+
+            ?>
                 <div class="card-header bg-primary text-white">
                     <h3 class="text-center">Registrazione</h3>
                 </div>
 
                 <div class="card-body">
 
-                    <form action="handle_register.php" method="POST">
+                    <form action="/controllers/handle_register.php" method="POST">
 
                         <div class="mb-3">
                             <label for="nome" class="form-label">Nome</label>
@@ -26,7 +38,7 @@ include "header.php";
                                 class="form-control"
                                 id="nome"
                                 name="nome"
-                                required>
+                                >
                         </div>
 
                         <div class="mb-3">
